@@ -37,7 +37,7 @@ namespace KaotikusAllatklinika.Tesztek
             allat.AggodalomSzint = 80;
             Assert.That(allat.Veszelyes, Is.True);
         }
-        /*
+
         [Test]
         public void KiborgKutya_HangotAd_AkkumulatorCsokken()
         {
@@ -47,75 +47,75 @@ namespace KaotikusAllatklinika.Tesztek
 
             Assert.That(kutya.AkkumulatorToltottseg, Is.EqualTo(15));
         }
+        /*
+[Test]
+public void KiborgKutya_KezelesKapot_OsEsSajatLogikaIsLefut()
+{
+    var kutya = new KiborgKutya("Rintintin Bot", 4, 50, 50);
 
-        [Test]
-        public void KiborgKutya_KezelesKapot_OsEsSajatLogikaIsLefut()
-        {
-            var kutya = new KiborgKutya("Rintintin Bot", 4, 50, 50);
+    kutya.KezelesKapot(20);
 
-            kutya.KezelesKapot(20);
+    Assert.That(kutya.EgeszsegSzint, Is.EqualTo(70)); // 50 + 20 (base)
+    Assert.That(kutya.AggodalomSzint, Is.EqualTo(10)); // 20 - 10 (base)
+    Assert.That(kutya.AkkumulatorToltottseg, Is.EqualTo(70)); // 50 + 20 (extra)
+}
 
-            Assert.That(kutya.EgeszsegSzint, Is.EqualTo(70)); // 50 + 20 (base)
-            Assert.That(kutya.AggodalomSzint, Is.EqualTo(10)); // 20 - 10 (base)
-            Assert.That(kutya.AkkumulatorToltottseg, Is.EqualTo(70)); // 50 + 20 (extra)
-        }
+[Test]
+public void HipnoMacska_KezelesKapot_GyogyitasCsokkenEsAggodalomNo()
+{
+    var macska = new HipnoMacska("Cirmos", 2, 40, 3); // HipnoEro = 3
 
-        [Test]
-        public void HipnoMacska_KezelesKapot_GyogyitasCsokkenEsAggodalomNo()
-        {
-            var macska = new HipnoMacska("Cirmos", 2, 40, 3); // HipnoEro = 3
+    macska.KezelesKapot(15);
 
-            macska.KezelesKapot(15);
+    // Gyógyulás = 15 - 3 = 12 -> Új egészség = 40 + 12 = 52
+    Assert.That(macska.EgeszsegSzint, Is.EqualTo(52));
+    // Aggodalom nõ 5-tel: 20 + 5 = 25
+    Assert.That(macska.AggodalomSzint, Is.EqualTo(25));
+}
 
-            // Gyógyulás = 15 - 3 = 12 -> Új egészség = 40 + 12 = 52
-            Assert.That(macska.EgeszsegSzint, Is.EqualTo(52));
-            // Aggodalom nõ 5-tel: 20 + 5 = 25
-            Assert.That(macska.AggodalomSzint, Is.EqualTo(25));
-        }
+[Test]
+public void PapagajVarazslo_VarazsolGyogyitast_ElegendoManaEsetenGyogyit()
+{
+    var papagaj = new PapagajVarazslo("Hahota", 1, 30, 20);
 
-        [Test]
-        public void PapagajVarazslo_VarazsolGyogyitast_ElegendoManaEsetenGyogyit()
-        {
-            var papagaj = new PapagajVarazslo("Hahota", 1, 30, 20);
+    papagaj.VarázsolGyogyitast();
 
-            papagaj.VarázsolGyogyitast();
+    Assert.That(papagaj.EgeszsegSzint, Is.EqualTo(50)); // 30 + 20
+    Assert.That(papagaj.ManaSzint, Is.EqualTo(5)); // 20 - 15
+}
 
-            Assert.That(papagaj.EgeszsegSzint, Is.EqualTo(50)); // 30 + 20
-            Assert.That(papagaj.ManaSzint, Is.EqualTo(5)); // 20 - 15
-        }
+[Test]
+public void Klinika_CsoportosKezeles_VeszelyesAllatotKihagy()
+{
+    var klinika = new Klinika();
+    var szelidKutya = new KiborgKutya("Bobi", 3, 50, 50);
+    var veszelyesMacska = new HipnoMacska("Mefisztó", 5, 50, 4);
+    veszelyesMacska.AggodalomSzint = 85; // Veszélyessé tesszük
 
-        [Test]
-        public void Klinika_CsoportosKezeles_VeszelyesAllatotKihagy()
-        {
-            var klinika = new Klinika();
-            var szelidKutya = new KiborgKutya("Bobi", 3, 50, 50);
-            var veszelyesMacska = new HipnoMacska("Mefisztó", 5, 50, 4);
-            veszelyesMacska.AggodalomSzint = 85; // Veszélyessé tesszük
+    klinika.BetegFelvétele(szelidKutya);
+    klinika.BetegFelvétele(veszelyesMacska);
 
-            klinika.BetegFelvétele(szelidKutya);
-            klinika.BetegFelvétele(veszelyesMacska);
+    klinika.CsoportosKezeles(20);
 
-            klinika.CsoportosKezeles(20);
+    // A szelíd kutya meggyógyult
+    Assert.That(szelidKutya.EgeszsegSzint, Is.EqualTo(70));
+    // A veszélyes macska nem kapott kezelést, maradt 50
+    Assert.That(veszelyesMacska.EgeszsegSzint, Is.EqualTo(50));
+}
 
-            // A szelíd kutya meggyógyult
-            Assert.That(szelidKutya.EgeszsegSzint, Is.EqualTo(70));
-            // A veszélyes macska nem kapott kezelést, maradt 50
-            Assert.That(veszelyesMacska.EgeszsegSzint, Is.EqualTo(50));
-        }
+[Test]
+public void Klinika_CsoportosKezeles_PapagajVarazslatLefutCastinggal()
+{
+    var klinika = new Klinika();
+    var papagaj = new PapagajVarazslo("Merlin", 2, 40, 30);
 
-        [Test]
-        public void Klinika_CsoportosKezeles_PapagajVarazslatLefutCastinggal()
-        {
-            var klinika = new Klinika();
-            var papagaj = new PapagajVarazslo("Merlin", 2, 40, 30);
+    klinika.BetegFelvétele(papagaj);
+    klinika.CsoportosKezeles(10);
 
-            klinika.BetegFelvétele(papagaj);
-            klinika.CsoportosKezeles(10);
-
-            // 1. Alap kezelés: 40 + 10 = 50
-            // 2. Típusvizsgálat után varázslat: 50 + 20 = 70
-            Assert.That(papagaj.EgeszsegSzint, Is.EqualTo(70));
-            Assert.That(papagaj.ManaSzint, Is.EqualTo(15)); // 30 - 15
-        }*/
+    // 1. Alap kezelés: 40 + 10 = 50
+    // 2. Típusvizsgálat után varázslat: 50 + 20 = 70
+    Assert.That(papagaj.EgeszsegSzint, Is.EqualTo(70));
+    Assert.That(papagaj.ManaSzint, Is.EqualTo(15)); // 30 - 15
+}*/
     }
 }

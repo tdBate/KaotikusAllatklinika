@@ -16,7 +16,6 @@ namespace KaotikusAllatklinika
             Kor = kor;
             EgeszsegSzint = egeszsegSzint;
             AggodalomSzint = 20;
-
         }
 
         public virtual void HangotAd()
