@@ -19,6 +19,18 @@ namespace KaotikusAllatklinika
 
         }
 
+        public virtual void HangotAd()
+        {
+            Console.WriteLine($"{Nev} érthetetlen állati hangokat ad ki");
+        }
+
+        public virtual void KezelesKapott(int gyogyitasMerteke)
+        {
+            EgeszsegSzint += gyogyitasMerteke;
+            AggodalomSzint -= 10;
+            Console.WriteLine($"{Nev} megkapta a kezelést.");
+        }
+
         //private bool veszelyes;
 
         public string Nev
