@@ -2,8 +2,8 @@
 
 namespace KaotikusAllatklinika
 {
-    public class KiborgKutya : Kisallat
+    public class KiborgKutya // : Kisallat
     {
-        
+
     }
 }

@@ -2,7 +2,7 @@
 
 namespace KaotikusAllatklinika
 {
-    public class PapagajVarazslo : Kisallat
+    public class PapagajVarazslo // : Kisallat
     {
 
     }

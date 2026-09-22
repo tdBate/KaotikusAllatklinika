@@ -2,8 +2,8 @@
 
 namespace KaotikusAllatklinika
 {
-    public class HipnoMacska : Kisallat
+    public class HipnoMacska //: Kisallat
     {
-    
+
     }
 }
